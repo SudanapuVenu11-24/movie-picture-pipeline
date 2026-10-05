@@ -4,7 +4,7 @@
 
 Public GitHub Repository:
 
-https://github.com/rthokala2/movie-picture-pipeline
+https://github.com/Sudanapuvenu11-24/movie-picture-pipeline
 
 ## CI/CD Workflows
 
@@ -13,10 +13,33 @@ https://github.com/rthokala2/movie-picture-pipeline
 - Backend Continuous Integration
 - Backend Continuous Deployment
 
+## Project Overview
+
+This project implements CI/CD pipelines for a React frontend and Flask backend using GitHub Actions.
+
+The pipelines perform:
+
+- Linting
+- Automated testing
+- Docker image building
+- Amazon ECR image publishing
+- Amazon EKS deployment
+- Kubernetes deployment using Kustomize
+
 ## Deployment Evidence
 
-Deployment screenshots are available in the `evidence/` directory.
+Deployment screenshots are available in the `evidences/` directory.
 
-The applications were successfully deployed to Amazon EKS and verified through the frontend application and backend `/movies` API.
+The frontend and backend applications were deployed to Amazon EKS and verified.
 
-AWS resources were destroyed with Terraform after verification, as instructed by the Udacity project documentation.
+## Frontend
+
+The frontend application displays the movie list retrieved from the backend API.
+
+## Backend
+
+The backend `/movies` API returns the movie catalog.
+
+## AWS Cleanup
+
+AWS resources were destroyed with Terraform after verification, as instructed by the project documentation.
