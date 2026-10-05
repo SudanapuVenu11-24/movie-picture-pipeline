@@ -40,6 +40,3 @@ The frontend application displays the movie list retrieved from the backend API.
 
 The backend `/movies` API returns the movie catalog.
 
-## AWS Cleanup
-
-AWS resources were destroyed with Terraform after verification, as instructed by the project documentation.
