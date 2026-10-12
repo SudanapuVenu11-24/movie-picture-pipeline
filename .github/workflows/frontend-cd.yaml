@@ -94,7 +94,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build Docker image
-              - name: Build Docker image
         working-directory: starter/frontend
         env:
           BACKEND_API_URL: ${{ secrets.BACKEND_API_URL }}
