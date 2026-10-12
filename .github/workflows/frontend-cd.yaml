@@ -142,8 +142,36 @@ jobs:
         run: |
           kustomize build . | kubectl apply -f -
 
-      - name: Verify deployment
+      - name: Verify Frontend Deployment and URL
         run: |
           kubectl rollout status deployment/frontend --timeout=180s
+
+          echo "## Frontend Deployment Verification" >> "$GITHUB_STEP_SUMMARY"
+
           kubectl get deployment frontend
+          kubectl get pods -o wide
           kubectl get service frontend
+
+          FRONTEND_HOST=""
+          for i in {1..30}; do
+            FRONTEND_HOST=$(kubectl get service frontend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+            if [ -n "$FRONTEND_HOST" ]; then
+              break
+            fi
+
+            echo "Waiting for frontend LoadBalancer hostname... ($i/30)"
+            sleep 10
+          done
+
+          if [ -z "$FRONTEND_HOST" ]; then
+            echo "ERROR: Frontend LoadBalancer hostname is unavailable"
+            exit 1
+          fi
+
+          FRONTEND_URL="http://${FRONTEND_HOST}"
+
+          echo "Frontend URL: $FRONTEND_URL" | tee -a "$GITHUB_STEP_SUMMARY"
+
+          echo "Testing frontend HTTP response..."
+          curl --fail --show-error --retry 5 --retry-delay 5 "$FRONTEND_URL"
